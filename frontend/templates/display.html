@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/display.css') }}">
+    <script src="{{ url_for('static',filename='js/index.js') }}"></script>
+</head>
+
+
+<body>
+<form method="POST">
+    <div id = "board" class = "board"></div>
+    <script>create_square()</script>
+    <script>square_fill_initially({{initials|safe}});</script>
+    <input type="submit" value="Submit Solution">
+</form>
+</body>
+
+</html>
