@@ -1,89 +1,130 @@
-import numpy as np
-import re
-import datetime
 
-sudoku = np.array([5, 3, 4, 6, 7, 2, 1, 9, 8, 6, 7, 8, 1, 9, 5, 3, 4, 2, 9, 1, 2, 3, 4, 8,
-5, 6, 7, 8, 5, 9, 4, 2, 6, 7 , 1, 3, 7, 6, 1, 8, 5, 3, 9, 2, 4, 4, 2, 3, 7, 9, 1, 8, 5, 6, 9, 6, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 1 ,9, 0, 0, 0, 2, 8, 0, 0, 0, 5, 0, 7, 0])
+# FIRST STEP CREATE DICTIONARY WITH POSSIBLE VALUES
 
-
-# sudoku = np.array([0, 3, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 1, 9, 5, 0, 0, 0, 0, 0,
-# 0, 0, 0, 0, 0, 6, 0, 8, 0, 0, 4, 0, 0, 0 , 0, 0, 0, 6, 0, 8, 0, 0, 0, 2, 0, 0, 0, 0,
-# 0, 0, 1, 0, 0, 0, 0, 6, 0,
-# 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 1 ,9, 0, 0, 0, 2, 8, 0, 0, 0, 5, 0, 7, 0])
+from operator import itemgetter
 
 
 
-def contains_duplicates(X):
-    X = np.delete(X, np.where(X == 0))
-    return len(np.unique(X)) != len(X)
+def find_cell(row, col):
+    if row <= 3 and col <= 3:
+        return 1
+    if row <= 3 and col <= 6:
+        return 2
+    if row <= 3:
+        return 3
+    if row <= 6 and col <= 3:
+        return 4
+    if row <= 6 and col <= 6:
+        return 5
+    if row <= 6:
+        return 6
+    if col <= 3:
+        return 7
+    if col <= 6:
+        return 8
+    return 9
 
-def isValid(sudoku):
-    columnindex = [0, 3, 6, 27, 30, 33, 54, 57, 60]
-    rowindex = [0, 1, 2, 9, 10, 11, 18, 19, 20]
-    for i in range(9):
-        if contains_duplicates(sudoku[0+9*i:9+9*i]):
-            return False
 
-    for i in [0, 1, 2, 9, 10, 11, 18, 19, 20]:
-        column = [x + i for x in columnindex]
-        if contains_duplicates(sudoku[column]):
-            return False
 
-        row = [x + 3 * i for x in rowindex]
-        if contains_duplicates(sudoku[row]):
-            return False
-    return True
+# find minimal unique possibilities
+def dict_to_list(possibles):
+    new_sudoku = []
+    for key, val in possibles.items():
+        if len(val) == 1:
+            col = int(str(key)[0])
+            row = int(str(key)[1])
+            cell = find_cell(row, col)
+            new_sudoku.append([val[0], row, col, cell])
+    return new_sudoku
 
-def next_step_valid(arr):
-    '''
-    next_step([1, 0, 0]) = next_step([1, 1, 0])
-    next_step([1, 1, 1]) = next_step([1, 2, 1])
-    next_step([1, , 9]) = next_step([2, 1, 1])
-    '''
-    arr[np.where(arr == 0)[0][0]] = 1
-    return arr
 
-def next_step_not_valid(arr):
-    '''
-    next_step([1, 0, 0]) = next_step([2, 0, 0])
-    next_step([9, 1, 1]) = next_step([1, 2, 1])
-    next_step([1, 1, 9]) = next_step(1, 2, 0])
-    '''
-    index_where_0 = np.where(arr == 0)[0]
-    if index_where_0.size > 0:
-        last_index = index_where_0[0]
-        test = [str(x) for x in arr[0:last_index]]
-        result = [int(x) for x in list(re.sub("0", "1", str(int("".join(test)) + 1)))]
-        arr[0:last_index] = result
+def find_max_fixed(sudoku):
+    old_len = len(sudoku)
+    possibles = calc_possibles(sudoku)
+    sudoku = dict_to_list(possibles)
+    while old_len < len(sudoku):
+        old_len = len(sudoku)
+        possibles = calc_possibles(sudoku)
+        sudoku = dict_to_list(possibles)
+    return sudoku
+
+def calc_possibles(sudoku):
+    mydict = {}
+    for row in range(1, 10):
+        for col in range(1, 10):
+            loc = int(str(row) + str(col))
+            cell = find_cell(row, col)
+            row_values = [x[0] for x in sudoku if x[1] == row]
+            col_values = [x[0] for x in sudoku if x[2] == col]
+            cell_values = [x[0] for x in sudoku if x[3] == cell]
+            blockedvalues = row_values + col_values + cell_values
+            possibles = [x for x in range(1, 10) if x not in blockedvalues]
+            prev_val = [x for x in sudoku if x[1] == row and x[2] == col]
+            if prev_val:
+                mydict[loc] = [prev_val[0][0]]
+            else:
+                mydict[loc] = possibles
+    return mydict
+
+
+# use recursion to go down possibility tree
+# if there is a memory error then the solution has to many possibilites anyway
+def reduce_possibility(sudoku):
+    sudoku = find_max_fixed(sudoku)
+    possibles = calc_possibles(sudoku)
+    len_possibles = []
+    for key in possibles:
+        len_possibles.append([key, len(possibles[key])])
+
+    if max([x[1] for x in len_possibles]) == 1:
+        print(possibles)
     else:
-        test = [str(x) for x in arr]
-        result = [int(x) for x in list(re.sub("0", "1", str(int("".join(test)) + 1)))]
-        arr = result
-    return arr
+        min_possibles = min([x[1] for x in len_possibles if x[1] > 1])
+        len_poss = [x[1] for x in len_possibles]
+        indices = [i for i, e in enumerate(len_poss) if e == min_possibles]
+        for index in indices:
+            possibles_one_element = possibles[len_possibles[index][0]]
+            for possibility in possibles_one_element:
+                this_possible = possibles.copy()
+                this_possible[len_possibles[index][0]] = [possibility]
+                reduce_possibility(dict_to_list(this_possible))
 
 
 
-indices = np.where(sudoku == 0)[0]
-
-trying = np.array([1] + [0] * (indices.size - 1))
-sudoku[indices] = trying
-
-begin = datetime.datetime.now()
-
-while (True):
-    if isValid(sudoku):
-        if np.where(trying==0)[0].size == 0:
-            break
-        trying = next_step_valid(trying)
-
-    else:
-        trying = next_step_not_valid(trying)
-    sudoku[indices] = trying
-    print(trying)
 
 
-end = datetime.datetime.now()
+# val, row, column, cell
+sudoku = [
+    #[5, 1, 1, 1],
+    #[3, 1, 2, 1],
+    [6, 2, 1, 1],
+    [9, 3, 2, 1],
+    [8, 3, 3, 1],
+    [1, 2, 4, 2],
+    [7, 1, 5, 2],
+    [9, 2, 5, 2],
+    [5, 2, 6, 2],
+    [6, 3, 8, 3],
+    [8, 4, 1, 4],
+    [4, 5, 1, 4],
+    [7, 6, 1, 4],
+    [6, 4, 5, 5],
+    [8, 5, 4, 5],
+    [3, 5, 6, 5],
+    [2, 6, 5, 5],
+    [3, 4, 9, 6],
+    [1, 5, 9, 6],
+    [6, 6, 9, 6],
+    [6, 7, 2, 7],
+    [4, 8, 4, 8],
+    [1, 8, 5, 8],
+    [9, 8, 6, 8],
+    [8, 9, 5, 8],
+    [2, 7, 7, 9],
+    [8, 7, 8, 9],
+    [5, 8, 9, 9],
+    [7, 9, 8, 9],
+    [9, 9, 9, 9]
+]
 
-
-print(end - begin)
+reduce_possibility(sudoku)
