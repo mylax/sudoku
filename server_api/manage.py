@@ -6,7 +6,7 @@ from sqlalchemy import or_
 import json
 import psycopg2
 from flask import Flask, jsonify
-
+import requests
 
 
 
@@ -31,6 +31,15 @@ def sudoku_values(initial):
     session.close()
 
     return initials
+
+
+
+def write_to_db(sudoku):
+    return "nothing yet"
+
+
+
+
 
 app = Flask(__name__)
 
@@ -61,6 +70,13 @@ def game_end():
 @app.route("/")
 def say_hello():
     return "hello"
+
+@app.route("/start")
+def index():
+    initials = requests.get("http://app3:6624/get_game_start").json()
+    write_to_db(initials)
+    return "game is saved to db"
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=6623)

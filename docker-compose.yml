@@ -35,3 +35,17 @@ services:
       - postgres
       - app
     entrypoint: ["python", "controllers.py","runserver"]
+  app3:
+    restart: always
+    build:
+      context: "./su_slvr"
+      # args:
+      #   - http_proxy=${http_proxy}
+      #   - https_proxy=${https_proxy}
+    ports:
+      - 6624:6624
+    depends_on:
+      - postgres
+      - app
+      - app2
+    entrypoint: ["python", "main.py","runserver"]
