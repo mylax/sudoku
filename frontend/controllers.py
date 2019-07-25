@@ -12,7 +12,7 @@ def say_hello_too():
 
 @app.route("/start")
 def index():
-    initials = requests.get("http://app:6623/get_game_start").json()
+    initials = requests.get("http://localhost:6623/get_game_start").json()
     return render_template("display.html", initials = initials)
 
 # @app.route("/end")

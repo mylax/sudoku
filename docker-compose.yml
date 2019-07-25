@@ -13,9 +13,9 @@ services:
     restart: always
     build:
       context: "./server_api"
-      # args:
-      #   - http_proxy=${http_proxy}
-      #   - https_proxy=${https_proxy}
+      args:
+        - http_proxy=${http_proxy}
+        - https_proxy=${https_proxy}
     ports:
       - 6623:6623
     depends_on:
@@ -26,9 +26,9 @@ services:
     restart: always
     build:
       context: "./frontend"
-      # args:
-      #   - http_proxy=${http_proxy}
-      #   - https_proxy=${https_proxy}
+      args:
+        - http_proxy=${http_proxy}
+        - https_proxy=${https_proxy}
     ports:
       - 8000:8000
     depends_on:
@@ -39,9 +39,9 @@ services:
     restart: always
     build:
       context: "./su_slvr"
-      # args:
-      #   - http_proxy=${http_proxy}
-      #   - https_proxy=${https_proxy}
+      args:
+        - http_proxy=${http_proxy}
+        - https_proxy=${https_proxy}
     ports:
       - 6624:6624
     depends_on:
