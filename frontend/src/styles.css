@@ -1,0 +1,22 @@
+.bigsquare {
+    width: 33.2%;
+    height: 33.2%;
+    float: left;
+    outline: 0.2vw solid black;
+}
+
+.smallsquare {
+    width: 33.33%;
+    height: 33.33%;
+    font-size: 9vh;
+    text-align: center;
+}
+.board {
+    border-right: 0.5px dashed #333;
+    width: 90vh;
+    height: 90vh;
+}
+#board {
+    width: 90vh;
+    height: 90vh;
+}
