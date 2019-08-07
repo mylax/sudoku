@@ -1,3 +1,9 @@
-<div id="board">
+<div class="board">
+    <div *ngFor="let row of rows">
+        <div *ngFor="let column of columns">
+            <div class="cell" [id]="row + 9 * (column - 1)">
+                {{ row + 9 * (column - 1) }}
+            </div>
+        </div>
+    </div>
 </div>
-{{ create_square() }}

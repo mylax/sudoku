@@ -1,0 +1,14 @@
+.cell {
+    box-sizing: border-box;
+    text-align: center;
+    border: 0.2px solid black;
+    width: 10vh;
+    height: 10vh;
+
+}
+.board {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    width: 90vh;
+    height: 90vh;
+}
