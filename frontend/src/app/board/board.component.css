@@ -1,14 +1,90 @@
 .cell {
-    box-sizing: border-box;
     text-align: center;
-    border: 0.2px solid black;
-    width: 10vh;
-    height: 10vh;
-
+    width: 9.9vh;
+    height: 9.9vh;
 }
 .board {
     display: grid;
-    grid-template-columns: repeat(9, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     width: 90vh;
     height: 90vh;
+}
+.square31 {
+    width: 29.8vh;
+    height: 29.8vh;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-left: 0.15vh solid red;
+    border-top: 0.15vh solid red;
+}
+.square32 {
+    width: 29.8vh;
+    height: 29.8vh;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-left: 0.15vh solid red;
+    border-top: 0.15vh solid red;
+}
+
+.square33 {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 30vh;
+    height: 30vh;
+    border-left: 0.2vh solid red;
+    border-top: 0.2vh solid red;
+    border-right: 0.2vh solid red;
+}
+
+.square34 {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 30vh;
+    height: 30vh;
+    border: 1vh solid red;
+}
+.square35 {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 30vh;
+    height: 30vh;
+    border: 1vh solid red;
+}
+
+.square36 {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 30vh;
+    height: 30vh;
+    border: 1vh solid red;
+}
+
+.square37 {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 30vh;
+    height: 30vh;
+    border: 1vh solid red;
+}
+.square38 {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 30vh;
+    height: 30vh;
+    border: 1vh solid red;
+}
+
+.square39 {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 30vh;
+    height: 30vh;
+    border: 1vh solid red;
 }

@@ -1,8 +1,9 @@
+<!-- <app-header></app-header> -->
 <div class="board">
     <div *ngFor="let row of rows">
-        <div *ngFor="let column of columns">
-            <div class="cell" [id]="row + 9 * (column - 1)">
-                {{ row + 9 * (column - 1) }}
+        <div class="square3{{row}}">
+            <div *ngFor="let row2 of rows">
+                <input class = "cell" id="{{ row2 + (row-1) * 9}}">
             </div>
         </div>
     </div>
