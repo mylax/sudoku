@@ -1,90 +1,25 @@
 .cell {
     text-align: center;
-    width: 9.9vh;
-    height: 9.9vh;
+    font-size: 9vh;
+    width: 9vh;
+    height: 9vh;
+    border: 0px;
+    padding: 0px;
+    outline: 1px solid gray;
+}
+.cell:focus {
+    background-color: yellow;
 }
 .board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    width: 90vh;
-    height: 90vh;
+    left: 10px;
+    top: 10px;
+    position: absolute;
 }
-.square31 {
-    width: 29.8vh;
-    height: 29.8vh;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border-left: 0.15vh solid red;
-    border-top: 0.15vh solid red;
-}
-.square32 {
-    width: 29.8vh;
-    height: 29.8vh;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border-left: 0.15vh solid red;
-    border-top: 0.15vh solid red;
-}
+.square3 {
 
-.square33 {
-    box-sizing: border-box;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    width: 30vh;
-    height: 30vh;
-    border-left: 0.2vh solid red;
-    border-top: 0.2vh solid red;
-    border-right: 0.2vh solid red;
-}
-
-.square34 {
-    box-sizing: border-box;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    width: 30vh;
-    height: 30vh;
-    border: 1vh solid red;
-}
-.square35 {
-    box-sizing: border-box;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    width: 30vh;
-    height: 30vh;
-    border: 1vh solid red;
-}
-
-.square36 {
-    box-sizing: border-box;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    width: 30vh;
-    height: 30vh;
-    border: 1vh solid red;
-}
-
-.square37 {
-    box-sizing: border-box;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    width: 30vh;
-    height: 30vh;
-    border: 1vh solid red;
-}
-.square38 {
-    box-sizing: border-box;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    width: 30vh;
-    height: 30vh;
-    border: 1vh solid red;
-}
-
-.square39 {
-    box-sizing: border-box;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    width: 30vh;
-    height: 30vh;
-    border: 1vh solid red;
+    outline: 2px solid black;
 }
