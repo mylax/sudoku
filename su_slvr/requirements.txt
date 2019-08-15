@@ -1,2 +1,4 @@
 FLASK
 pandas
+flask-restplus
+flask-cors

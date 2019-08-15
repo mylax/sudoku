@@ -2,22 +2,19 @@ from solver import find_sudoku
 import json
 from flask import Flask, jsonify
 from flask_restplus import Resource, Api
-
+from flask_cors import CORS, cross_origin
 
 
 app = Flask(__name__)
-api = Api(app)
+cors = CORS(app)
+app.config["CORS_HEADERS"] = "Content-Type"
 
 
-@api.route("/create_sudoku")
-# @api.doc(params={"id": "An ID"})
-class CreateSudoku(Resource):
-    def get(self):
-        sudoku = find_sudoku()
-        return jsonify(sudoku.to_dict(orient = "list"))
-    # @api.doc(responses={403: "Not Authorized"})
-    # def post(self, id):
-    #     api.abort(403)
+@app.route("/create_sudoku")
+@cross_origin()
+def get():
+    sudoku = find_sudoku()
+    return jsonify(sudoku.to_dict(orient = "list"))
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=6001)

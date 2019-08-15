@@ -13,39 +13,39 @@ services:
     restart: always
     build:
       context: "./server_api"
-      args:
-        - http_proxy=${http_proxy}
-        - https_proxy=${https_proxy}
+      # args:
+      #   - http_proxy=${http_proxy}
+      #   - https_proxy=${https_proxy}
     ports:
-      - 6623:6623
+      - 6002:6002
     depends_on:
       - postgres
     entrypoint: ["python", "manage.py","runserver"]
 
-  app2:
-    restart: always
-    build:
-      context: "./frontend"
-      args:
-        - http_proxy=${http_proxy}
-        - https_proxy=${https_proxy}
-    ports:
-      - 8000:8000
-    depends_on:
-      - postgres
-      - app
-    entrypoint: ["python", "controllers.py","runserver"]
+  # app2:
+  #   restart: always
+  #   build:
+  #     context: "./frontend"
+  #     # args:
+  #     #   - http_proxy=${http_proxy}
+  #     #   - https_proxy=${https_proxy}
+  #   ports:
+  #     - 8000:8000
+  #   depends_on:
+  #     - postgres
+  #     - app
+  #   entrypoint: ["python", "controllers.py","runserver"]
   app3:
     restart: always
     build:
       context: "./su_slvr"
-      args:
-        - http_proxy=${http_proxy}
-        - https_proxy=${https_proxy}
+      # args:
+      #   - http_proxy=${http_proxy}
+      #   - https_proxy=${https_proxy}
     ports:
-      - 6624:6624
+      - 6001:6001
     depends_on:
       - postgres
       - app
-      - app2
+      # - app2
     entrypoint: ["python", "main.py","runserver"]
