@@ -3,3 +3,4 @@ psycopg2
 sqlalchemy
 requests
 pandas
+flask-cors

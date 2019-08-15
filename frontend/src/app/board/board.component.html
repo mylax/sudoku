@@ -2,9 +2,8 @@
     <div *ngFor="let row of rows">
         <div class="square3">
             <div *ngFor="let row2 of rows">
-                <input class = "cell" id="{{ row2 + (row-1) * 9}}">
+                <input class = "cell" id="{{find_id(row, row2)}}" value={{val[find_val(row,row2)]}}>
             </div>
         </div>
     </div>
 </div>
-<button (click)="get_sudoku()"> get sudoku</button>

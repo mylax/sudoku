@@ -9,6 +9,7 @@ from flask import Flask, jsonify
 import requests
 import pandas as pd
 from random import shuffle
+from flask_cors import CORS, cross_origin
 
 def sudoku_values(initial):
     db_string = "postgres://testusr:passwor@localhost:7435/testdb"
@@ -40,9 +41,11 @@ def sudoku_values(initial):
 
 
 app = Flask(__name__)
-
+cors = CORS(app)
+app.config["CORS_HEADERS"] = "Content-Type"
 
 @app.route("/get_game_start", methods=['GET'])
+@cross_origin()
 def game_start():
     initials = sudoku_values([1])
     return jsonify(initials)
@@ -54,7 +57,7 @@ def game_end():
 
 @app.route("/start")
 def index():
-    initials = requests.get("http://localhost:5000/create_sudoku").json()
+    initials = requests.get("http://localhost:6001/create_sudoku").json()
     dat = pd.DataFrame(initials)
     dat["id_game"] = hash(json.dumps(initials))
     dat.index += 1

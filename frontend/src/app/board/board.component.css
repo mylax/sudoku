@@ -1,6 +1,6 @@
 .cell {
     text-align: center;
-    font-size: 9vh;
+    font-size: 7vh;
     width: 9vh;
     height: 9vh;
     border: 0px;
@@ -21,5 +21,5 @@
 
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    outline: 2px solid black;
+    outline: 4px solid darkgoldenrod;
 }
