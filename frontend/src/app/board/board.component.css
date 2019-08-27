@@ -1,11 +1,15 @@
 .cell {
     text-align: center;
-    font-size: 7vh;
-    width: 9vh;
-    height: 9vh;
-    border: 0px;
-    padding: 0px;
-    outline: 1px solid gray;
+    font-size: 200%;
+    width: 100%;
+    height: 100%;
+    border: 1px solid gray;
+}
+
+
+
+.cell:hover {
+    background-color: lightyellow;
 }
 .cell:focus {
     background-color: yellow;
@@ -13,13 +17,14 @@
 .board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    left: 10px;
-    top: 10px;
-    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 2px;
+    background-color: black;
+    border: 10px solid orange;
 }
 .square3 {
-
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    outline: 4px solid darkgoldenrod;
+    border: 1px solid black;
 }
