@@ -29,6 +29,12 @@ export class BoardComponent implements OnInit {
     if (val) { return val};
     return "";
   }
+  isEnabled(row, column) {
+    if(this.find_val(row,  column) === "") {
+      return null
+    }
+    return ''
+  }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
