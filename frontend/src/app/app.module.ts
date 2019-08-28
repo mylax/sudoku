@@ -8,6 +8,7 @@ import { BoardComponent } from './board/board.component';
 import { HeaderComponent } from './header/header.component';
 import { MenuRightComponent } from './menu-right/menu-right.component';
 import { MenuLeftComponent } from './menu-left/menu-left.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { MenuLeftComponent } from './menu-left/menu-left.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

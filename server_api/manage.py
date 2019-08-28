@@ -10,50 +10,49 @@ import requests
 import pandas as pd
 from random import shuffle
 from flask_cors import CORS, cross_origin
-
-def sudoku_values(initial):
-    db_string = "postgres://testusr:passwor@localhost:7435/testdb"
-    db = create_engine(db_string)
-    base = declarative_base()
-    class Sudoku(base):
-        __tablename__ = 'sudoku'
-        val = Column(Integer)
-        initial = Column(Integer)
-        index = Column(Integer, primary_key = True)
-        id_game = Column(Integer)
-
-    Session = sessionmaker(db)
-    session = Session()
-    base.metadata.create_all(db)
-
-    ids = []
-    for value in session.query(Sudoku.id_game).distinct():
-        ids.append(value)
-    shuffle(ids)
-    id_to_filter = ids[0][0]
-
-    initials = {}
-    for u in session.query(Sudoku).filter(Sudoku.id_game == id_to_filter).filter(Sudoku.initial.in_(initial)).all():
-        initials[u.index] = u.val
-    session.close()
-
-    return initials
-
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config["CORS_HEADERS"] = "Content-Type"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://testusr:passwor@localhost:7435/testdb"
+db = SQLAlchemy(app)
 
-@app.route("/get_game_start", methods=['GET'])
+class Sudoku(db.Model):
+        val = Column(db.Integer)
+        initial = Column(db.Integer)
+        index = Column(db.Integer, primary_key = True)
+        id_game = Column(db.Integer, primary_key = True)
+
+@app.route("/get_ids", methods=["GET"])
 @cross_origin()
-def game_start():
-    initials = sudoku_values([1])
-    return jsonify(initials)
+def game_ids():
+    all_ids = [x.id_game for x in Sudoku.query.all()]
+    unique_ids = len(list(set(all_ids)))
+    unique_ids = list(range(unique_ids))
+    return jsonify(unique_ids)
 
-@app.route("/get_game_end")
-def game_end():
-    initials = sudoku_values([0, 1])
-    return jsonify(initials)
+
+@app.route("/get_game_start/<int:id>", methods=['GET'])
+@cross_origin()
+def game_start(id):
+    all_ids = [x.id_game for x in Sudoku.query.all()]
+    unique_ids = list(set(all_ids))
+    query = Sudoku.query.filter_by(id_game=unique_ids[id], initial = 1).all()
+    result = {}
+    for x in query:
+        result[x.index] = x.val
+    return jsonify(result)
+
+@app.route("/get_game_end/<int:id>", methods=['GET'])
+def game_end(id):
+    all_ids = [x.id_game for x in Sudoku.query.all()]
+    unique_ids = list(set(all_ids))
+    query = Sudoku.query.filter_by(id_game=unique_ids[id]).all()
+    result = {}
+    for x in query:
+        result[x.index] = x.val
+    return jsonify(result)
 
 @app.route("/start")
 def index():

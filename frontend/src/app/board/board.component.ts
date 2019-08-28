@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit} from '@angular/core';
+import { InitnumService} from '../initnum.service';
+import { ActivatedRoute, Params} from '@angular/router';
 
 @Component({
   selector: 'app-board',
@@ -11,14 +12,11 @@ export class BoardComponent implements OnInit {
   columns: number[];
   data: any;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(
+    private initnum: InitnumService,
+    private route: ActivatedRoute) {
     this.rows = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     this.columns = [1, 2, 3];
-    this.data = [];
-    this.httpClient.get("http://localhost:6002/get_game_start").subscribe((data)=>{
-      this.data = data;
-      console.log(data);
-      });
    }
 
   find_id(row, column) {
@@ -31,6 +29,18 @@ export class BoardComponent implements OnInit {
     if (val) { return val};
     return "";
   }
+
   ngOnInit() {
+    this.route.params.subscribe((params: Params) => {
+      console.log(params);
+      let id2 = +this.route.snapshot.paramMap.get('id')
+      this.getHeroes(id2);
+    })
+  }
+  getHeroes(id): void {
+    this.initnum.getHeroes(id).subscribe(heroes => this.data = heroes)
+  }
+  see() {
+    console.log(this.data);
   }
 }

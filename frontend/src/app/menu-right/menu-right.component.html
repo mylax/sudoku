@@ -1,1 +1,7 @@
-<p>menu-right works!</p>
+<div
+class="menu-right"
+*ngFor="let id of id_dat">
+        <nav>
+        <a routerLink="/{{id}}">{{id}}</a>
+        </nav>
+</div>
