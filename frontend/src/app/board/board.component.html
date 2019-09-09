@@ -1,3 +1,4 @@
+<form [formGroup]="checkoutForm" (ngSubmit)="onSubmit(checkoutForm.value)">
 <div class="board">
     <div class="square3" *ngFor="let row of rows">
         <input
@@ -5,6 +6,9 @@
         id={{find_id(row,row2)}}
         value={{find_val(row,row2)}}
         *ngFor="let row2 of rows"
-        [attr.disabled]="isEnabled(row,row2)">
+        [attr.disabled]="isEnabled(row,row2)"
+        formControlName="{{find_id(row,row2)}}">
     </div>
 </div>
+<button class="button" type="submit">Submit Game</button>
+</form>

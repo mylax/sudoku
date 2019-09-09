@@ -8,8 +8,8 @@ import { IdsService} from '../ids.service';
 })
 export class MenuRightComponent implements OnInit {
   id_dat: any;
-
   constructor(private ids: IdsService) {
+
    }
 
   ngOnInit() {

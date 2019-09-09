@@ -1,7 +1,12 @@
-<div
-class="menu-right"
-*ngFor="let id of id_dat">
-        <nav>
-        <a routerLink="/{{id}}">{{id}}</a>
-        </nav>
+<div class="menu-right">
+        <div class="row" *ngFor="let id of id_dat">
+                <div class="col-sm-6">
+                <nav>
+                <a routerLink="/{{id}}">{{id}}</a>
+                </nav>
+                </div>
+                <div class="col-sm-6">
+                        unsolved
+                </div>
+        </div>
 </div>

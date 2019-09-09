@@ -19,10 +19,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://testusr:passwor@localhost:
 db = SQLAlchemy(app)
 
 class Sudoku(db.Model):
-        val = Column(db.Integer)
-        initial = Column(db.Integer)
-        index = Column(db.Integer, primary_key = True)
-        id_game = Column(db.Integer, primary_key = True)
+    val = Column(db.Integer)
+    initial = Column(db.Integer)
+    index = Column(db.Integer, primary_key = True)
+    id_game = Column(db.Integer, primary_key = True)
 
 @app.route("/get_ids", methods=["GET"])
 @cross_origin()

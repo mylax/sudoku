@@ -9,7 +9,7 @@ import { HeaderComponent } from './header/header.component';
 import { MenuRightComponent } from './menu-right/menu-right.component';
 import { MenuLeftComponent } from './menu-left/menu-left.component';
 import { AppRoutingModule } from './app-routing.module';
-
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +22,8 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
