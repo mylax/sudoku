@@ -1,9 +1,5 @@
 # Sudoku App
 
-- [Sudoku App](#sudoku-app)
-  - [Structure](#structure)
-  - [Input/Output Formats](#inputoutput-formats)
-
 ## Structure
 
 Four Services are provided in Docker:
