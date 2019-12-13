@@ -7,6 +7,6 @@ import {HttpClient} from '@angular/common/http';
 export class InitnumService {
   constructor(private http: HttpClient) {}
   getHeroes(id: string){
-    return this.http.get("http://localhost:6002/get_game_start/" + id)
+    return this.http.get("http://localhost:6004/get_game_start/" + id)
   }
 }
