@@ -1,11 +1,5 @@
 FROM python:latest
 
-ARG http_proxy
-ARG https_proxy
-
-# ENV https_proxy ${http_proxy}
-# ENV http_proxy ${https_proxy}
-
 RUN apt-get update
 RUN mkdir /app
 WORKDIR /app

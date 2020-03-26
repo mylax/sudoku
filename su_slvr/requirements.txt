@@ -2,3 +2,4 @@ FLASK
 pandas
 flask-restplus
 flask-cors
+Werkzeug==0.16.1

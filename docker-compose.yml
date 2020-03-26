@@ -3,49 +3,40 @@ services:
   postgres:
     restart: always
     image: postgres:latest
+    container_name: db
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
-    ports:
-      - "7435:5432"
   app:
     restart: always
     build:
       context: "./server_api"
-      # args:
-      #   - http_proxy=${http_proxy}
-      #   - https_proxy=${https_proxy}
+    container_name: server_api
     ports:
-      - 6002:6002
+      - "6002:5000"
     depends_on:
       - postgres
     entrypoint: ["python", "manage.py","runserver"]
 
-  # app2:
-  #   restart: always
-  #   build:
-  #     context: "./frontend"
-  #     # args:
-  #     #   - http_proxy=${http_proxy}
-  #     #   - https_proxy=${https_proxy}
-  #   ports:
-  #     - 8000:8000
-  #   depends_on:
-  #     - postgres
-  #     - app
-  #   entrypoint: ["python", "controllers.py","runserver"]
   app3:
     restart: always
     build:
       context: "./su_slvr"
-      # args:
-      #   - http_proxy=${http_proxy}
-      #   - https_proxy=${https_proxy}
-    ports:
-      - 6001:6001
+    container_name: su_slvr
     depends_on:
       - postgres
       - app
-      # - app2
     entrypoint: ["python", "main.py","runserver"]
+
+  frontend:
+    restart: always
+    build:
+      context: "./frontend"
+    container_name: frontend
+    depends_on:
+      - postgres
+      - app
+      - app3
+    command: >
+      bash -c "npm install && ng serve --host 0.0.0.0 --port 4200"

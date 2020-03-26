@@ -15,7 +15,7 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 cors = CORS(app)
 app.config["CORS_HEADERS"] = "Content-Type"
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:password@localhost:5432/postgres"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://testusr:passwor@db:5432/testdb"
 db = SQLAlchemy(app)
 
 class Sudoku(db.Model):
@@ -56,11 +56,11 @@ def game_end(id):
 
 @app.route("/start")
 def index():
-    initials = requests.get("http://localhost:6003/create_sudoku").json()
+    initials = requests.get("http://su_slvr:5000/create_sudoku").json()
     dat = pd.DataFrame(initials)
     dat["id_game"] = hash(json.dumps(initials))
     dat.index += 1
-    db_string = "postgresql://postgres:password@localhost:5432/postgres"
+    db_string = "postgresql://testusr:passwor@db:5432/testdb"
     engine = create_engine(db_string)
     dat.index.name = "index"
     dat.to_sql("sudoku", engine, if_exists = "append")
@@ -68,4 +68,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=6004)
+    app.run(debug=True, host='0.0.0.0')
